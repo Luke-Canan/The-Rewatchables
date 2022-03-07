@@ -39,6 +39,7 @@ def getPodcastEpisodes(token, podcastID):
 
     # https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-shows-episodes
 
+
     # Initialze variables 
     movieList = []
     getHeader = {
@@ -47,6 +48,7 @@ def getPodcastEpisodes(token, podcastID):
     limit = 50
     offset = 0
 
+    # Multiple requests required due to query limit
     while True:
 
         # GET request
@@ -54,7 +56,7 @@ def getPodcastEpisodes(token, podcastID):
         podcastEndpoint = f"https://api.spotify.com/v1/shows/{podcastID}/episodes?market=US&limit={limit}&offset={offset}"
         episodes = requests.get(podcastEndpoint, headers=getHeader).json()["items"]
 
-        # Exit loop when no more episodes left to query
+        # Exit loop once all episodes queried
         if len(episodes) == 0:
             break
 
@@ -71,7 +73,7 @@ def getPodcastEpisodes(token, podcastID):
 
 def movieTitle(episodeTitle):
 
-    # Ignore introduction podcasts and repeat movies
+    # Ignore introduction episodes and repeat movie episodes
     ignoreEpisodes = ["Intro: 'The Rewatchables'",
                       "“The Re-Heat” With Bill Simmons and Chris Ryan", 
                       "Welcome to The Rewatchables", 
@@ -85,8 +87,6 @@ def movieTitle(episodeTitle):
     demarcators = "[\u2018|\u2019|\"|\'|\u201C|\u201D]"
     # Extract movie title from episode title
     movieTitle = re.split(f"{demarcators}", episodeTitle)[1]
-    # Remove demarcators
-    # movieTitle = movieTitle[1:-1]
     # Remove unncessary trailing comma
     movieTitle = movieTitle.replace(",", "")
 
