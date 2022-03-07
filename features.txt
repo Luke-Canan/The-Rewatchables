@@ -1,0 +1,15 @@
+# TODO Email code maintainer on new episode release to make sure movie title is correct
+
+# TODO Find API that consolidates streaming status amongst streaming services for each movie
+
+# TODO Login
+
+# TODO Connect profile to streaming services
+
+# TODO Update user's Spotify based on streaming service data
+
+# TODO Update streaming service watchlist based on Spotify data 
+
+# TODO Display infomation on webpage
+
+# TODO Filter webpage by streaming service
