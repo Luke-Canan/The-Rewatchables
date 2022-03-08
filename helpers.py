@@ -3,6 +3,8 @@ import base64, json, re
 
 def getAccessToken(clientID, clientSecret):
 
+    """Get access token for API"""
+
     # https://developer.spotify.com/documentation/general/guides/authorization/client-credentials/
 
 
@@ -23,6 +25,8 @@ def getAccessToken(clientID, clientSecret):
 
 def asciiToBase64str(ascii_str):
 
+    """Convert ASCII string to Base64 string"""
+
     # https://stackabuse.com/encoding-and-decoding-base64-strings-in-python/
 
 
@@ -30,7 +34,7 @@ def asciiToBase64str(ascii_str):
     ascii_bytes = ascii_str.encode('ascii')
     # Convert ASCII bytes to Base64 bytes
     base64_bytes = base64.b64encode(ascii_bytes)
-    # Convert Base64 bytes to BAse64 string 
+    # Convert Base64 bytes to Base64 string 
     base64_str = base64_bytes.decode('ascii')
 
     return base64_str
@@ -73,7 +77,9 @@ def getPodcastEpisodes(token, podcastID):
 
 def movieTitle(episodeTitle):
 
-    # Ignore introduction episodes and repeat movie episodes
+    """Extract movie title from episode title"""
+
+    # Ignore introduction episodes and repeat movies
     ignoreEpisodes = ["Intro: 'The Rewatchables'",
                       "“The Re-Heat” With Bill Simmons and Chris Ryan", 
                       "Welcome to The Rewatchables", 
@@ -83,11 +89,21 @@ def movieTitle(episodeTitle):
     if episodeTitle in ignoreEpisodes:
         return None
 
-    # Characters that designate the start and end of movie title within episode title
+    # Split episode title by characters that designate the start and end of movie title
     demarcators = "[\u2018|\u2019|\"|\'|\u201C|\u201D]"
-    # Extract movie title from episode title
-    movieTitle = re.split(f"{demarcators}", episodeTitle)[1]
-    # Remove unncessary trailing comma
-    movieTitle = movieTitle.replace(",", "")
+    movieTitle = re.split(f"{demarcators}", episodeTitle)
+
+    # No apostrophe in movie title or guest list
+    if len(movieTitle) == 3:
+        movieTitle = movieTitle[1]
+    # Apostrophe in guest list
+    elif movieTitle[1].find("The Shawshank Redemption") >= 0 or movieTitle[1].find("Fatal Attraction") >= 0:
+        movieTitle = movieTitle[1]
+    # Apostrophe in movie title
+    else:
+        movieTitle = movieTitle[1] + "\'" + movieTitle[2]
+
+    # Remove unncessary trailing comma if exists
+    print(movieTitle.replace(",", ""))
 
     return movieTitle
