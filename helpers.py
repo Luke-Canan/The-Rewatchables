@@ -104,6 +104,6 @@ def movieTitle(episodeTitle):
         movieTitle = movieTitle[1] + "\'" + movieTitle[2]
 
     # Remove unncessary trailing comma if exists
-    print(movieTitle.replace(",", ""))
+    movieTitle = movieTitle.replace(",", "")
 
     return movieTitle
