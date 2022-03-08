@@ -41,11 +41,13 @@ def asciiToBase64str(ascii_str):
 
 def getPodcastEpisodes(token, podcastID):
 
+    """Get all episodes for given podcast"""
+
     # https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-shows-episodes
 
 
     # Initialze variables 
-    movieList = []
+    episodeList = []
     getHeader = {
         "Authorization": "Bearer " + token,
     }
@@ -58,22 +60,20 @@ def getPodcastEpisodes(token, podcastID):
         # GET request
         # Include market in endpoint or else ID will be invalid (Spotify API bug)
         podcastEndpoint = f"https://api.spotify.com/v1/shows/{podcastID}/episodes?market=US&limit={limit}&offset={offset}"
-        episodes = requests.get(podcastEndpoint, headers=getHeader).json()["items"]
+        response = requests.get(podcastEndpoint, headers=getHeader).json()["items"]
 
         # Exit loop once all episodes queried
-        if len(episodes) == 0:
+        if len(response) == 0:
             break
 
         # Add to list of movie titles
-        for e in episodes:
-            movie = movieTitle(e["name"].strip())
-            if movie != None:
-                movieList.append(movie)
+        for episode in response:
+            episodeList.append(episode["name"].strip())
         
         # Offset next query 
-        offset += len(episodes)
+        offset += len(response)
 
-    return movieList
+    return episodeList
 
 def movieTitle(episodeTitle):
 
