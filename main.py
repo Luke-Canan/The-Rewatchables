@@ -29,3 +29,6 @@ for movie in movieList:
     }
     movie_db.append(item)
     print(item)
+
+# End Chrome webdriver
+driver.quit()
