@@ -127,7 +127,10 @@ def getStreamProviders(movie_title, driver):
     # Extract HTML from loaded webpage
     html_loaded = driver.page_source
     soup = BeautifulSoup(html_loaded, "html.parser")
-    stream_container = soup.find("div",{"class":"price-comparison__grid__row price-comparison__grid__row--stream"})
+    first_result = soup.find("div", {"class":"monetizations"})
+    stream_container = first_result.find("div",{"class":"price-comparison__grid__row price-comparison__grid__row--stream"})
+    if stream_container == None:
+        return None
     stream_items = stream_container.find("div",{"class": "price-comparison__grid__row__holder"}).find_all("div", {"class": "price-comparison__grid__row__element"})
 
     # Create list of streaming providers
