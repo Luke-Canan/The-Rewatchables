@@ -13,7 +13,7 @@ episodeList = getPodcastEpisodes(token, podcastID)
 movieList = []
 for episodeTitle in episodeList:
     movie = getMovieTitle(episodeTitle)
-    if movie != None:
+    if movie != None and movie not in movieList:
         movieList.append(movie)
 
 # Initialize Chrome webdriver
