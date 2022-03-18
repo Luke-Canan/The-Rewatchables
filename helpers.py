@@ -121,13 +121,13 @@ def getStreamProviders(movie_title, driver):
     url = f"https://www.justwatch.com/us/search?q={movie_title_parsed}"
     driver.get(url)
 
-    # Delay to let webpage load
-    time.sleep(3)
-
-    # Extract HTML from loaded webpage
-    html_loaded = driver.page_source
-    soup = BeautifulSoup(html_loaded, "html.parser")
-    first_result = soup.find("div", {"class":"monetizations"})
+    # Extract HTML once webpage loads
+    while True:
+        html = driver.page_source
+        soup = BeautifulSoup(html, "html.parser")
+        first_result = soup.find("div", {"class":"monetizations"})
+        if first_result!= None:
+            break
     stream_container = first_result.find("div",{"class":"price-comparison__grid__row price-comparison__grid__row--stream"})
     if stream_container == None:
         return None
