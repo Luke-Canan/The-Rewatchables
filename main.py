@@ -1,4 +1,4 @@
-from helpers import getAccessToken, getPodcastEpisodes, getStreamProviders, getMovieTitle
+from helpers import getAccessToken, getMovieTitle, getPodcastEpisodes, getStreamProviders
 from secrets import *
 from selenium import webdriver
 

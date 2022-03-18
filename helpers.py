@@ -1,9 +1,5 @@
-import requests
-import base64, json, re
-from selenium import webdriver
+import base64, re, requests, urllib
 from bs4 import BeautifulSoup
-import time
-import urllib
 
 def getAccessToken(clientID, clientSecret):
 
