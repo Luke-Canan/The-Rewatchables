@@ -1,5 +1,9 @@
 import requests
 import base64, json, re
+from selenium import webdriver
+from bs4 import BeautifulSoup
+import time
+import urllib
 
 def getAccessToken(clientID, clientSecret):
 
@@ -75,7 +79,7 @@ def getPodcastEpisodes(token, podcastID):
 
     return episodeList
 
-def movieTitle(episodeTitle):
+def getMovieTitle(episodeTitle):
 
     """Extract movie title from episode title"""
 
@@ -107,3 +111,29 @@ def movieTitle(episodeTitle):
     movieTitle = movieTitle.replace(",", "")
 
     return movieTitle
+
+def getStreamProviders(movie_title, driver):
+
+    """Use Chrome driver to scrap JustWatch website for movie's streaming providers"""
+
+    # Search for movie
+    movie_title_parsed = urllib.parse.quote(movie_title)
+    url = f"https://www.justwatch.com/us/search?q={movie_title_parsed}"
+    driver.get(url)
+
+    # Delay to let webpage load
+    time.sleep(3)
+
+    # Extract HTML from loaded webpage
+    html_loaded = driver.page_source
+    soup = BeautifulSoup(html_loaded, "html.parser")
+    stream_container = soup.find("div",{"class":"price-comparison__grid__row price-comparison__grid__row--stream"})
+    stream_items = stream_container.find("div",{"class": "price-comparison__grid__row__holder"}).find_all("div", {"class": "price-comparison__grid__row__element"})
+
+    # Create list of streaming providers
+    streamProviders = []
+    for item in stream_items:
+        provider = item.div.a.picture.img["title"]
+        streamProviders.append(provider)
+
+    return streamProviders

@@ -1,5 +1,6 @@
-from helpers import getAccessToken, getPodcastEpisodes, movieTitle
+from helpers import getAccessToken, getPodcastEpisodes, getStreamProviders, getMovieTitle
 from secrets import *
+from selenium import webdriver
 
 # Get Spotify API access token
 token = getAccessToken(clientID, clientSecret)
@@ -11,10 +12,20 @@ episodeList = getPodcastEpisodes(token, podcastID)
 # Create list of movie titles
 movieList = []
 for episodeTitle in episodeList:
-    movie = movieTitle(episodeTitle)
+    movie = getMovieTitle(episodeTitle)
     if movie != None:
         movieList.append(movie)
 
-# Print each movie to terminal
+# Initialize Chrome webdriver
+PATH = "/Applications/chromedriver"
+driver = webdriver.Chrome(PATH)
+
+# Populate database with movie title and streaming providers
+movie_db = []
 for movie in movieList:
-    print(movie)
+    item = {
+        "movie": movie,
+        "providers": getStreamProviders(movie, driver)
+    }
+    movie_db.append(item)
+    print(item)
