@@ -27,10 +27,15 @@ driver = webdriver.Chrome(service=service, options=options)
 
 # Collect streaming data for each movie
 streaming_data = []
+providers_list = []
 for movie in movieList:
+    providers = getStreamProviders(movie, driver)
+    for p in providers:
+        if p not in providers_list and p != "":
+            providers_list.append(p)
     item = {
         "movie": movie,
-        "providers": getStreamProviders(movie, driver)
+        "providers": providers
     }
     streaming_data.append(item)
     print(item)
@@ -44,3 +49,7 @@ with open("data.csv", "w") as output_file:
     writer = csv.DictWriter(output_file, keys)
     writer.writeheader()
     writer.writerows(streaming_data)
+
+for provider in sorted(providers_list, key=str.casefold):
+    print(provider)
+print(len(providers_list))
