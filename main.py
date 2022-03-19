@@ -1,6 +1,7 @@
 from helpers import getAccessToken, getMovieTitle, getPodcastEpisodes, getStreamProviders
 from secrets import *
 from selenium import webdriver
+import csv
 
 # Get Spotify API access token
 token = getAccessToken(clientID, clientSecret)
@@ -34,3 +35,10 @@ for movie in movieList:
 
 # End Chrome webdriver
 driver.quit()
+
+# Create csv
+keys = movie_db[0].keys()
+with open("db.csv", "w", newline="") as output_file:
+    writer = csv.DictWriter(output_file, keys)
+    writer.writeheader()
+    writer.writerows(movie_db)
