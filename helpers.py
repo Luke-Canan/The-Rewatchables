@@ -118,11 +118,11 @@ def getStreamProviders(movie_title, driver):
     stream_container = first_result.find("div",{"class":"price-comparison__grid__row price-comparison__grid__row--stream"})
     if stream_container == None:
         # Not available to stream
-        return None
+        return [""]
     stream_items = stream_container.find("div",{"class": "price-comparison__grid__row__holder"}).find_all("div", {"class": "price-comparison__grid__row__element"})
     if stream_items == []:
         # JustWatch bug - stream container exists, but no elements listed (i.e. The Godfather Part II/III)
-        return None
+        return [""]
 
     # Create list of streaming providers
     streamProviders = []
