@@ -2,6 +2,7 @@ from ssl import Options
 from helpers import getAccessToken, getMovieTitle, getPodcastEpisodes, getStreamProviders
 from secrets import *
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 import csv
 
 # Get Spotify API access token
@@ -20,9 +21,10 @@ for episodeTitle in episodeList:
 
 # Initialize Chrome webdriver
 CHROMEDRIVER_PATH = "/Applications/chromedriver"
+service = Service(CHROMEDRIVER_PATH)
 options = webdriver.ChromeOptions()
 options.headless = True
-driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
+driver = webdriver.Chrome(service=service, options=options)
 
 # Collect streaming data for each movie
 streaming_data = []
