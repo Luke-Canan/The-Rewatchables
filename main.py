@@ -1,3 +1,4 @@
+from ssl import Options
 from helpers import getAccessToken, getMovieTitle, getPodcastEpisodes, getStreamProviders
 from secrets import *
 from selenium import webdriver
@@ -19,26 +20,26 @@ for episodeTitle in episodeList:
 
 # Initialize Chrome webdriver
 CHROMEDRIVER_PATH = "/Applications/chromedriver"
-chrome_options = webdriver.ChromeOptions()
-chrome_options.headless = True
-driver = webdriver.Chrome(CHROMEDRIVER_PATH, chrome_options=chrome_options)
+options = webdriver.ChromeOptions()
+options.headless = True
+driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=options)
 
-# Populate database with movie title and streaming providers
-movie_db = []
+# Collect streaming data for each movie
+streaming_data = []
 for movie in movieList:
     item = {
         "movie": movie,
         "providers": getStreamProviders(movie, driver)
     }
-    movie_db.append(item)
+    streaming_data.append(item)
     print(item)
 
 # End Chrome webdriver
 driver.quit()
 
-# Create csv
-keys = movie_db[0].keys()
-with open("db.csv", "w", newline="") as output_file:
+# Output data to csv
+keys = streaming_data[0].keys()
+with open("data.csv", "w") as output_file:
     writer = csv.DictWriter(output_file, keys)
     writer.writeheader()
-    writer.writerows(movie_db)
+    writer.writerows(streaming_data)
