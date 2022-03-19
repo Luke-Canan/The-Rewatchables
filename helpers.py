@@ -5,9 +5,6 @@ def getAccessToken(clientID, clientSecret):
 
     """Get access token for API"""
 
-    # https://developer.spotify.com/documentation/general/guides/authorization/client-credentials/
-
-
     # POST request
     authEndpoint = "https://accounts.spotify.com/api/token"
     authHeader = {
@@ -27,9 +24,6 @@ def asciiToBase64str(ascii_str):
 
     """Convert ASCII string to Base64 string"""
 
-    # https://stackabuse.com/encoding-and-decoding-base64-strings-in-python/
-
-
     # Convert ASCII string to ASCII bytes
     ascii_bytes = ascii_str.encode('ascii')
     # Convert ASCII bytes to Base64 bytes
@@ -42,9 +36,6 @@ def asciiToBase64str(ascii_str):
 def getPodcastEpisodes(token, podcastID):
 
     """Get all episodes for given podcast"""
-
-    # https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-shows-episodes
-
 
     # Initialze variables 
     episodeList = []
@@ -110,7 +101,7 @@ def getMovieTitle(episodeTitle):
 
 def getStreamProviders(movie_title, driver):
 
-    """Use Chrome driver to scrap JustWatch website for movie's streaming providers"""
+    """Use Chrome driver to scrape JustWatch website for movie's streaming providers"""
 
     # Search for movie
     movie_title_parsed = urllib.parse.quote(movie_title)
