@@ -17,8 +17,10 @@ for episodeTitle in episodeList:
         movieList.append(movie)
 
 # Initialize Chrome webdriver
-PATH = "/Applications/chromedriver"
-driver = webdriver.Chrome(PATH)
+CHROMEDRIVER_PATH = "/Applications/chromedriver"
+chrome_options = webdriver.ChromeOptions()
+chrome_options.headless = True
+driver = webdriver.Chrome(CHROMEDRIVER_PATH, chrome_options=chrome_options)
 
 # Populate database with movie title and streaming providers
 movie_db = []
