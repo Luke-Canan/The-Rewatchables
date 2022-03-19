@@ -1,4 +1,3 @@
-from ssl import Options
 from helpers import getAccessToken, getMovieTitle, getPodcastEpisodes, getStreamProviders
 from secrets import *
 from selenium import webdriver
