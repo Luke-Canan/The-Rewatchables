@@ -131,4 +131,3 @@ def getStreamProviders(movie_title, driver):
         streamProviders.append(provider)
 
     return streamProviders
-    
