@@ -3,6 +3,7 @@ from secrets import *
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import csv
+import sqlite3
 
 # Get Spotify API access token
 token = getAccessToken(clientID, clientSecret)
@@ -43,13 +44,25 @@ for movie in movieList:
 # End Chrome webdriver
 driver.quit()
 
-# Output data to csv
-keys = streaming_data[0].keys()
-with open("data.csv", "w") as output_file:
-    writer = csv.DictWriter(output_file, keys)
-    writer.writeheader()
-    writer.writerows(streaming_data)
+# Initialize SQL
+connection = sqlite3.connect("movie_db")
+cursor = connection.cursor()
 
-for provider in sorted(providers_list, key=str.casefold):
-    print(provider)
-print(len(providers_list))
+# Create tables
+cursor.execute("CREATE TABLE movies (id INTEGER PRIMARY KEY, movie_title TEXT)")
+connection.commit()
+cursor.execute("CREATE TABLE streamers (movie_id INTEGER , streamer TEXT, FOREIGN KEY(movie_id) REFERENCES movies(id))")
+connection.commit()
+
+# Populate database
+for movie in streaming_data:
+    cursor.execute("INSERT INTO movies (movie_title) VALUES(?)", (movie["movie"],))
+    connection.commit()
+    # 
+    movie_id = cursor.lastrowid
+    for streamer in movie["providers"]:
+        cursor.execute("INSERT INTO streamers (movie_id, streamer) VALUES(?, ?)", (movie_id, streamer))
+        connection.commit()
+        
+# End connection
+connection.close()
