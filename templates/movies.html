@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <form action="/">
+        <button type="submit">Home</button>
+    </form>
+    <table>
+        {% for movie in movies %}
+            <tr>
+                <td>{{ movie[0] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

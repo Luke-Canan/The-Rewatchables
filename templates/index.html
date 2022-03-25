@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <form action="/update">
+        <button type="submit">Update</button>
+    </form>
+    <form action="/movies">
+        <label for="providers">Choose a streaming provider:</label>
+        <select name="providers" id="providers">
+            {% for header in headers %}
+                <option value="{{ header[0] }}">{{ header[0] }}</option>
+            {% endfor %}   
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
