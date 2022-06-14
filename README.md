@@ -4,7 +4,7 @@ https://youtu.be/K31IDwSUWjw
 ## Description: 
 Determine streaming availability of movies reviewed in "The Rewatchables" podcast.
 ## Background: 
-When I am deciding what movie to watch, I reference movie's reviewed in "The Rewatchables" podcast. This process entails searching through the podcast episode list for a movie that interests me and then searching the internet to see what streaming service it is offered on. If it is offered on a service I am subscripted to, then great! If not, then I have to repeat the process. My end goal with this project was to be able to select a streaming service and see what movie's that service offers that have also been reviewed on the podcast. 
+When I am deciding what movie to watch, I reference movies reviewed in "The Rewatchables" podcast. This process entails searching through the podcast episode list for a movie that interests me and then searching the internet to see what streaming service it is offered on. If it is offered on a service I am subscripted to, then great! If not, then I have to repeat the process. My end goal with this project was to be able to select a streaming service and see what movie's that service offers that have also been reviewed on the podcast. 
 ## Project Breakdown:
 ### Spotify API: 
 Authenticated application with Spotify and used application ID's to obtain an access token. Once access token is granted, it is used to request data, specifically the title for each episode. The API returns the data in JSON format. 
