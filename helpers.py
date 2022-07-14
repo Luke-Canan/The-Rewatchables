@@ -3,7 +3,16 @@ from bs4 import BeautifulSoup
 
 def getAccessToken(clientID, clientSecret):
 
-    """Get access token for API"""
+    """
+    Get access token for Spotify API
+
+        Parameters:
+            clientID (str): unique identifier of app
+            clientSecret (str): key used to authorize app
+        
+        Returns:
+            accessToken (str): key used to make requests to Spotify Web API
+    """
 
     # POST request
     authEndpoint = "https://accounts.spotify.com/api/token"
@@ -22,7 +31,15 @@ def getAccessToken(clientID, clientSecret):
 
 def asciiToBase64str(ascii_str):
 
-    """Convert ASCII string to Base64 string"""
+    """
+    Convert ASCII string to Base64 string
+
+        Parameters:
+            ascii_str (str): string in ASCII format
+
+        Returns:
+            base64_str (str): string in Base64 format
+    """
 
     # Convert ASCII string to ASCII bytes
     ascii_bytes = ascii_str.encode('ascii')
@@ -35,7 +52,16 @@ def asciiToBase64str(ascii_str):
 
 def getPodcastEpisodes(token, podcastID):
 
-    """Get all episodes for given podcast"""
+    """
+    Get all episodes for given podcast
+    
+        Parameters:
+            token (str): key used to make requests to Spotify Web API
+            podcastID (str): unique identifier of the show
+
+        Returns:
+            episodeList ([str]): list of podcasts episodes
+    """
 
     # Initialze variables 
     episodeList = []
@@ -68,7 +94,15 @@ def getPodcastEpisodes(token, podcastID):
 
 def getMovieTitle(episodeTitle):
 
-    """Extract movie title from episode title"""
+    """
+    Extract movie title from episode title
+
+        Parameters:
+            episodeTitle (str): title of podcast episode 
+
+        Returns:
+            movieTitle (str): title of movie reviewed in podcast episode
+    """
 
     # Ignore introduction episodes and repeat movies
     ignoreEpisodes = ["Intro: 'The Rewatchables'",
@@ -101,7 +135,16 @@ def getMovieTitle(episodeTitle):
 
 def getStreamProviders(movie_title, driver):
 
-    """Use Chrome driver to scrape JustWatch website for movie's streaming providers"""
+    """
+    Use Chrome driver to scrape JustWatch website for movie's streaming providers
+
+        Parameters:
+            movie_title (str): title of movie to web scrape streaming availability
+            driver (Selenium WebDriver): used to write automated web application UI tests against HTTP websites
+
+        Returns:
+            streamProviders ([str]): list of streaming providers for the movie
+    """
 
     # Search for movie
     movie_title_parsed = urllib.parse.quote(movie_title)
