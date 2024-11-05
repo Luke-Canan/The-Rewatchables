@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import sqlite3
 from flask import Flask, redirect, render_template, request
+import time
 
 app = Flask(__name__)
 
@@ -70,6 +71,7 @@ def update():
         }
         streaming_data.append(item)
         print(item)
+        time.sleep(3)
 
     # End Chrome webdriver
     driver.quit()

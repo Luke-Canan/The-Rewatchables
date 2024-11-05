@@ -160,14 +160,14 @@ def getStreamProviders(movie_title, driver):
     while True:
         html = driver.page_source
         soup = BeautifulSoup(html, "html.parser")
-        first_result = soup.find("div", {"class":"monetizations"})
+        first_result = soup.find("div", {"class":"title-list-row__row title-list-row__row__search"})
         if first_result!= None:
             break
-    stream_container = first_result.find("div",{"class":"price-comparison__grid__row price-comparison__grid__row--stream"})
+    stream_container = first_result.find("div",{"class":"buybox-row stream inline"})
     if stream_container == None:
         # Not available to stream
         return [""]
-    stream_items = stream_container.find("div",{"class": "price-comparison__grid__row__holder"}).find_all("div", {"class": "price-comparison__grid__row__element"})
+    stream_items = stream_container.find("div",{"class": "buybox-row__offers"}).find_all("a", recursive=False)
     if stream_items == []:
         # JustWatch bug - stream container exists, but no elements listed (i.e. The Godfather Part II/III)
         return [""]
@@ -175,7 +175,7 @@ def getStreamProviders(movie_title, driver):
     # Create list of streaming providers
     streamProviders = []
     for item in stream_items:
-        provider = item.div.a.picture.img["title"]
+        provider = item.picture.img["alt"]
         streamProviders.append(provider)
 
     return streamProviders
