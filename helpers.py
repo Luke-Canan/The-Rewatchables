@@ -110,7 +110,9 @@ def getMovieTitle(episodeTitle):
                       "Welcome to The Rewatchables", 
                       "Miami Vice: Calderone’s Return (Part 1 + 2)",
                       "“The Re-Departed” With Bill Simmons, Chris Ryan, and Sean Fennessey",
-                      "The Three-'Heat' With Bill Simmons, Chris Ryan, and Michael Mann"]
+                      "The Three-'Heat' With Bill Simmons, Chris Ryan, and Michael Mann",
+                      "The New Categories Selection Show",
+                      "Creed With Bill Simmons, Wesley Morris, Sean Fennessey, and K. Austin Collins"] # already reviewed
     if episodeTitle in ignoreEpisodes:
         return None
 
@@ -124,6 +126,9 @@ def getMovieTitle(episodeTitle):
     # Apostrophe in guest list
     elif movieTitle[1].find("The Shawshank Redemption") >= 0 or movieTitle[1].find("Fatal Attraction") >= 0:
         movieTitle = movieTitle[1]
+    # Missing opening aporstrophe in movie title 
+    elif movieTitle[0] != "":
+        movieTitle = movieTitle[0]
     # Apostrophe in movie title
     else:
         movieTitle = movieTitle[1] + "\'" + movieTitle[2]

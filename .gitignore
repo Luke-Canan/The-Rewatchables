@@ -1,2 +1,5 @@
 spotifyCodes.py
 features.txt
+.gitignore
+__pycache__/
+.venv

@@ -1,5 +1,5 @@
 from helpers import getAccessToken, getMovieTitle, getPodcastEpisodes, getStreamProviders
-from spotifyCodes import *
+from spotifyCodes import clientID, clientSecret
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import sqlite3
